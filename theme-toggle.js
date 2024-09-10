@@ -3,12 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const setTheme = (theme) => {
         const themeLink = document.getElementById('theme-style');
-        if (!themeLink) {
-            console.error("Theme link element not found!");
-            return;
-        }
         console.log(`Setting theme to: ${theme}`);
-        themeLink.href = `/${theme}`; // Ensure this path points to the correct theme file
+        themeLink.href = `/${theme}`; // Set the absolute path to the CSS file
         document.cookie = `theme=${theme}; path=/; max-age=31536000`; // Store theme in a cookie
     };
 
@@ -23,19 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
         setTheme(storedTheme);
         if (themeSelector) {
             themeSelector.value = storedTheme;
-        } else {
-            console.warn("Theme selector element not found!");
         }
     };
 
     if (themeSelector) {
         themeSelector.addEventListener('change', (event) => {
             const selectedTheme = event.target.value;
-            console.log(`Theme selected: ${selectedTheme}`);
             setTheme(selectedTheme);
         });
-    } else {
-        console.warn("Theme selector element not found during DOMContentLoaded!");
     }
 
     applyStoredTheme();
