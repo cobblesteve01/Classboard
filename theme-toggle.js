@@ -3,14 +3,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const setTheme = (theme) => {
         const themeLink = document.getElementById('theme-style');
-        console.log(`Setting theme to: ${theme}`);
-        themeLink.href = `/${theme}`; // Set the absolute path to the CSS file
+        const basePath = window.location.pathname.split('/').slice(0, -1).join('/'); // Dynamically set base path
+        const fullPath = `${basePath}/${theme}`;
+        console.log(`Setting theme to: ${fullPath}`);
+        themeLink.href = fullPath; // Set the theme based on the relative path
         document.cookie = `theme=${theme}; path=/; max-age=31536000`; // Store theme in a cookie
     };
 
     const getThemeFromCookie = () => {
         const match = document.cookie.match(/(^| )theme=([^;]+)/);
-        return match ? match[2] : 'style.css'; // Default to light theme if no cookie found
+        return match ? match[2] : 'style.css'; // Default to light theme if no cookie is found
     };
 
     const applyStoredTheme = () => {
